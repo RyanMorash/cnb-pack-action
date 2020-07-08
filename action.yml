@@ -1,0 +1,29 @@
+name: 'Pack Container'
+description: 'Build container image using Cloud Native Buildpacks'
+inputs:
+  image-name:
+    description: 'Name of container to pack to'
+    required: true
+  path:
+    description: 'Path to app dir or zip-formatted file (defaults to current working directory)'
+    required: false
+  builder:
+    description: 'Builder image'
+    required: true
+  buildpack:
+    description: 'Buildpack reference in the form of "<buildpack>@<version>", separate multiple by comma'
+    required: false
+  env:
+    description: ''
+    required: false
+  env-file:
+    description: ''
+    required: false
+runs:
+  using: 'docker'
+  image: 'docker://buildpacksio/pack'
+  args:
+    - ${{ inputs.image-name }}
+    - --path ${{ inputs.path }}
+    - --builder ${{ inputs.path }}
+    - --buildpack ${{ inputs.buildpack }}
